@@ -14,6 +14,7 @@ export function getFilms(){
 
 export function addFilm(data){
     const film = new Film({
+        id: data.id,
         title: data.name,
         release: data.release,
         form: data.form,
