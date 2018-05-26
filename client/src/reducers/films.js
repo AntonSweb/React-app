@@ -1,28 +1,27 @@
-const initialState = [
-    {
-        id: 1,
-        title: 'Shutter Island',
-        release: 2010,
-        form: "DVD",
-        stars: "Dicaprio"
-    },
-    {
-        id: 2,
-        title: 'Léon: The Professional',
-        release: 1994,
-        form: "HD",
-        stars: "Leon"
-    },
-];
-// const initialState = [];
-
-export default function filmsInfo (state=initialState, action) {
+export function itemsError (state = false, action) {
     switch (action.type){
-        // case "LOAD_FILM":
-        //     return [...state, action.payload];
-        case "ADD_FILM":
+        case "ERROR":
+            return action.payload;
+        default:
+            return state
+    }
+
+}
+export function itemsSuccess (state = [], action) {
+    switch (action.type){
+        case "LOAD_FILMS_SUCCESS":
+            // return [...state, action.payload];
             return action.payload;
         default:
             return state
     }
 }
+export function viewDetails (state = {}, action) {
+    switch (action.type){
+        case "VIEW_DETAILS":
+            return action.payload;
+        default:
+            return state
+    }
+}
+// }

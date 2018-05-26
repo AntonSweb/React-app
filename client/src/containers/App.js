@@ -4,8 +4,7 @@ import '../App.css';
 
 import {connect} from 'react-redux';
 import FilmInfo from '../components/FilmInfo';
-// import loadFilmAction from '../actions/actionFilm';
-import {asyncGetFilms} from '../actions/actionFilm'
+import {asyncGetFilms, viewDetails} from '../actions/actionFilm'
 
 class App extends Component {
 
@@ -16,7 +15,13 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
-                <FilmInfo info={this.props.info} getFilms={this.props.onGetFilms}/>
+                <FilmInfo
+                    hasError={this.props.hasError}
+                    info={this.props.items}
+                    active={this.props.activeItem}
+                    getFilms={this.props.getFilmsFunction}
+                    getDetails={this.props.getDetailsFunction}
+                />
             </div>
         );
     }
@@ -25,17 +30,19 @@ class App extends Component {
 
 function mapStateToProps(state){
     return {
-        info: state.filmsInfo
+        items: state.itemsSuccess,
+        hasError: state.itemsError,
+        activeItem: state.viewDetails
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        // setFilmFunction: list => {
-            // dispatch(loadFilmAction(list))
-        // },
-        onGetFilms: () => {
+        getFilmsFunction: () => {
             dispatch(asyncGetFilms());
+        },
+        getDetailsFunction: film => {
+            dispatch(viewDetails(film))
         }
     }
 }

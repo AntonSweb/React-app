@@ -7,27 +7,36 @@ class FilmInfo extends Component {
         // return this.props.setFilm(e.target.textContent);
     }
 
-    showList() {
+    componentDidMount() {
+        this.props.getFilms();
+    }
+
+    showListTitle() {
      return this.props.info.map((item) =>
-        <ul key={item.id}>
-            <li>{item.id}</li>
-            <li>{item.title}</li>
-            <li>{item.release}</li>
-            <li>{item.form}</li>
-            <li>{item.stars}</li>
-        </ul>
+            <li
+                key={item.id}
+                onClick={() => this.props.getDetails(item)}>
+                {item.title}
+            </li>
      )
     }
 
     render() {
+        if (this.props.hasError) {
+            return <p>Sorry! There was an error loading the films</p>;
+        }
         return (
-            <div>
+            <div className="movie">
+                <h2 className="movie__title">Films:</h2>
+                <ul className="movie__title-list">
+                    {this.showListTitle()}
+                </ul>
+                <hr />
+                <h2 className="movieDetail">Details:</h2>
                 <ul>
-                    {this.showList()}
-                    {/*<p>{this.props.info.title}</p>*/}
-                    {/*<p>{this.props.info.release}</p>*/}
-                    {/*<button onClick={this.props.btnClick.bind(this)}>Island</button>*/}
-                    <button onClick={this.props.getFilms}>Island</button>
+                    <li>{this.props.active.release}</li>
+                    <li>{this.props.active.form}</li>
+                    <li>{this.props.active.stars}</li>
                 </ul>
             </div>
         );
