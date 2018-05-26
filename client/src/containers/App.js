@@ -4,7 +4,8 @@ import '../App.css';
 
 import {connect} from 'react-redux';
 import FilmInfo from '../components/FilmInfo';
-import setFilmAction from '../actions/actionFilm'
+// import loadFilmAction from '../actions/actionFilm';
+import {asyncGetFilms} from '../actions/actionFilm'
 
 class App extends Component {
 
@@ -15,7 +16,7 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
-                <FilmInfo info={this.props.info} setFilm={this.props.setFilmFunction}/>
+                <FilmInfo info={this.props.info} getFilms={this.props.onGetFilms}/>
             </div>
         );
     }
@@ -30,8 +31,11 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return {
-        setFilmFunction: film => {
-            dispatch(setFilmAction(film))
+        // setFilmFunction: list => {
+            // dispatch(loadFilmAction(list))
+        // },
+        onGetFilms: () => {
+            dispatch(asyncGetFilms());
         }
     }
 }

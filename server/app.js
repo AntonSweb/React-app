@@ -8,16 +8,16 @@ dbFilms.setUpConnection();
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/films', (req, res) => {
+app.get('/api/films', (req, res) => {
    dbFilms.getFilms().then(data => res.send(data));
    //  res.send({ express: 'Hello From Express' });
 });
 
-app.post('/films', (req, res) => {
+app.post('/api/films', (req, res) => {
     dbFilms.addFilm(req.body).then(data => res.send(data))
 });
 
-app.delete('/films/:id', (req, res) => {
+app.delete('/api/films/:id', (req, res) => {
     dbFilms.removeFilm(req.params.id).then(data => res.send(data))
 });
 
