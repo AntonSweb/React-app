@@ -16,7 +16,7 @@ export function itemsSuccess (state = [], action) {
             return state
     }
 }
-export function viewDetails (state = {}, action) {
+export function viewDetails (state = null, action) {
     switch (action.type){
         case "VIEW_DETAILS":
             return action.payload;
@@ -24,4 +24,21 @@ export function viewDetails (state = {}, action) {
             return state
     }
 }
-// }
+
+export function addNewFilm (state = [], action) {
+    switch (action.type){
+        case "ADD_FILM_SUCCESS":
+            return action.payload;
+        default:
+            return state
+    }
+}
+
+export function removeFilm (state = [], action) {
+    switch (action.type){
+        case "FILM_REMOVED":
+            return action.payload;
+        default:
+            return state
+    }
+}

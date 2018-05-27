@@ -14,7 +14,8 @@ app.get('/api/films', (req, res) => {
 });
 
 app.post('/api/films', (req, res) => {
-    dbFilms.addFilm(req.body).then(data => res.send(data))
+    dbFilms.addFilm(req.body).then(data => res.send(data));
+    console.log();
 });
 
 app.delete('/api/films/:id', (req, res) => {

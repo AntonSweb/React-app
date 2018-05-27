@@ -27,3 +27,15 @@ export function addFilm(data){
 export function removeFilm(id){
     return Film.findById(id).remove();
 }
+
+
+function getNextSequenceValue(sequenceName){
+
+    const sequenceDocument = Film.findAndModify({
+        query:{_id: sequenceName },
+        update: {$inc:{sequence_value:1}},
+        new:true
+    });
+
+    return sequenceDocument.sequence_value;
+}
