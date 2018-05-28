@@ -14,7 +14,6 @@ export function getFilms(){
 
 export function addFilm(data){
     const film = new Film({
-        id: data.id,
         title: data.name,
         release: data.release,
         form: data.form,
@@ -24,18 +23,25 @@ export function addFilm(data){
     return film.save();
 }
 
+export function addLoadedFilm(data){
+    let films;
+    for (let key in data) {
+        if (data.hasOwnProperty(key)){
+              films = new Film({
+                          title: data[key].name,
+                          release: data[key].release,
+                          form: data[key].form,
+                          stars: data[key].stars
+              }).save();
+        }
+    }
+    return films;
+}
+
 export function removeFilm(id){
     return Film.findById(id).remove();
 }
 
-
-function getNextSequenceValue(sequenceName){
-
-    const sequenceDocument = Film.findAndModify({
-        query:{_id: sequenceName },
-        update: {$inc:{sequence_value:1}},
-        new:true
-    });
-
-    return sequenceDocument.sequence_value;
+export function removeAllFilms(){
+    return Film.remove();
 }

@@ -7,10 +7,10 @@ class FilmInfo extends Component {
         this.props.getFilms();
     }
 
-    showListTitle() {
-     return this.props.info.map((item) =>
+    showListFilms() {
+     return this.props.info.map((item, index) =>
             <li
-                key={item.id}
+                key={index}
                 index={item.id}
                 onClick={() => this.props.getDetails(item)}>
                 {item.title}
@@ -21,13 +21,7 @@ class FilmInfo extends Component {
     deleteMovie(id){
         this.props.deleteFilm(id);
         this.props.getFilms();
-        this.props.getDetails(null)
-    }
-
-    noMovieSelected() {
-        return(
-            <p className="movie__not-select">Please select film</p>
-        )
+        this.props.getDetails(null);
     }
 
     showSelectedMovie() {
@@ -39,7 +33,8 @@ class FilmInfo extends Component {
                     <li>{this.props.selected.stars}</li>
                 </ul>
                 <button onClick={() => this.deleteMovie(this.props.selected._id)}>
-                    Delete this Film</button>
+                    Delete this Film
+                </button>
             </div>
         )
     }
@@ -49,7 +44,7 @@ class FilmInfo extends Component {
             return <p>Sorry! There was an error loading the films</p>;
         }
         if (this.props.selected === null){
-            this.movieSelected = this.noMovieSelected();
+            this.movieSelected = <p className="movie__not-select">Please select film</p>
         } else {
             this.movieSelected = this.showSelectedMovie();
         }
@@ -58,7 +53,7 @@ class FilmInfo extends Component {
             <div className="movie__list">
                 <h2 className="movie__title">Films:</h2>
                 <ol className="movie__title-list">
-                    {this.showListTitle()}
+                    {this.showListFilms()}
                 </ol>
                 <hr />
                 <h2 className="movie__detail">Details:</h2>

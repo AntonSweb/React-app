@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import {required} from "./FormValidator";
+import {required} from "./formValidator";
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 
-class AddNewFilm extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {values: {}};
-    // }
+
+class NewFilms extends Component {
 
     handleSubmit (e) {
         e.preventDefault();
@@ -15,7 +12,7 @@ class AddNewFilm extends Component {
         let flag = true;
 
         for(let key in data){
-            if (data[key] === ''){
+            if (data.hasOwnProperty(key) && data[key] === '') {
                 flag = false;
             }
         }
@@ -23,23 +20,40 @@ class AddNewFilm extends Component {
         if(flag){
             this.props.newFilm(data);
             this.props.getFilms();
-            console.log(data);
         } else {
             this.form.validateAll();
         }
     }
+
+    deleteAllFilms() {
+        this.props.deleteAll();
+        this.props.getDetails(null);
+        this.props.getFilms();
+    }
+
     render() {
 
         return (
-            <Form id="movie-form" className="movie__form" ref={c => { this.form = c }}>
-                <Input validations={[required]} className="movie__form-in" type="text" name="name" placeholder="title..."/>
-                <Input validations={[required]} className="movie__form-in" type="number" name="release" placeholder="release..." />
-                <Input validations={[required]} className="movie__form-in" type="text" name="form" placeholder="format..." />
-                <Input validations={[required]} className="movie__form-in" type="text" name="stars" placeholder="stars..." />
-                <button onClick={this.handleSubmit.bind(this)} className="button movie__form-send" name="send" value="Add Film">SEND</button>
-            </Form>
+            <div className="movie__add">
+                <Form id="movie-form" className="movie__form" ref={c => { this.form = c }}>
+                    <Input validations={[required]} className="movie__form-in" type="text" name="name" placeholder="title..."/>
+                    <Input validations={[required]} className="movie__form-in" type="number" name="release" placeholder="release..." />
+                    <Input validations={[required]} className="movie__form-in" type="text" name="form" placeholder="format..." />
+                    <Input validations={[required]} className="movie__form-in" type="text" name="stars" placeholder="stars..." />
+                    <div className="movie__btn-wrap">
+                        <button onClick={this.handleSubmit.bind(this)} className="button movie__btn movie__form-send" name="send" value="Add Film">
+                            SEND
+                        </button>
+                    </div>
+                </Form>
+                <div className="movie__btn-wrap">
+                    <button onClick={this.deleteAllFilms.bind(this)} className="button movie__btn movie__remove" name="send" value="Remove Film">
+                        Remove All Films
+                    </button>
+                </div>
+            </div>
         )
     }
 }
-export default AddNewFilm;
+export default NewFilms;
 

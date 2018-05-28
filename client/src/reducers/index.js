@@ -1,12 +1,20 @@
 import {combineReducers} from 'redux';
-import {itemsSuccess, itemsError, viewDetails, addNewFilm, removeFilm} from './films.js';
+import {
+    itemsSuccess,
+    itemsError,
+    viewDetails,
+    addNewFilm,
+    removeFilm,
+    removedAllFilms
+} from './films.js';
 
 const allReducers = combineReducers({
     itemsSuccess,
     itemsError,
     viewDetails,
     addNewFilm,
-    removeFilm
+    removeFilm,
+    removedAllFilms
 });
 
 export default allReducers

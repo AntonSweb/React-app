@@ -4,14 +4,22 @@ import '../App.css';
 
 import {connect} from 'react-redux';
 import FilmInfo from '../components/FilmInfo';
-import AddNewFilm from '../components/AddFilm';
-import {asyncGetFilms, viewDetails, addNewFilm, deleteFilm} from '../actions/actionFilm'
+import NewFilms from '../components/AddFilm';
+import LoadFilms from '../components/LoadFile';
+import {
+    asyncGetFilms,
+    viewDetails,
+    addNewFilm,
+    deleteFilm,
+    loadFilms,
+    deleteAllFilms
+} from '../actions/actionFilm'
 
 class App extends Component {
 
     render() {
         return (
-            <div className="movie">
+            <div className="movie App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Welcome to React</h1>
@@ -24,9 +32,15 @@ class App extends Component {
                     getDetails={this.props.getDetailsFunction}
                     deleteFilm={this.props.deleteFilmFunction}
                 />
-                <AddNewFilm
+                <NewFilms
                     getFilms={this.props.getFilmsFunction}
                     newFilm={this.props.addFilmFunction}
+                    getDetails={this.props.getDetailsFunction}
+                    deleteAll={this.props.deleteAllFilmsFunction}
+                />
+                <LoadFilms
+                    loadFilms={this.props.loadFilmsFunction}
+                    getFilms={this.props.getFilmsFunction}
                 />
             </div>
         );
@@ -50,11 +64,17 @@ function mapDispatchToProps(dispatch) {
         getDetailsFunction: film => {
             dispatch(viewDetails(film))
         },
-        addFilmFunction: (newFilm) => {
+        addFilmFunction: newFilm => {
             dispatch(addNewFilm(newFilm));
+        },
+        loadFilmsFunction: loadedFilms => {
+            dispatch(loadFilms(loadedFilms))
         },
         deleteFilmFunction: id => {
             dispatch(deleteFilm(id));
+        },
+        deleteAllFilmsFunction: () => {
+            dispatch(deleteAllFilms());
         }
     }
 }
