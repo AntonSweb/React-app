@@ -1,4 +1,5 @@
 .App {
+  padding-bottom: 50px;
   text-align: center;
 }
 
@@ -8,13 +9,15 @@
 }
 
 .App-header {
+  margin-bottom: 40px;
   background-color: #222;
-  height: 150px;
+  height: 165px;
   padding: 20px;
   color: white;
 }
 
 .App-title {
+  margin-top: 15px;
   font-size: 1.5em;
 }
 
@@ -26,3 +29,86 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.form-error{
+  color: #dc3545;
+  text-align: left;
+  margin: 10px 0;
+  display: block;
+}
+
+.movie__details-btn{
+  margin: 20px;
+}
+
+.movie__not-select{
+  font-size: 20px;
+}
+
+.movie__list-item{
+  display: list-item!important;
+  cursor: pointer;
+  text-align: left;
+}
+
+.movie__load-label{
+  display: block;
+  font-size: 18px;
+  text-align: left;
+}
+
+.form-group label{
+  font-size: 18px;
+}
+
+.movie__detail-list{
+  margin-top: 20px;
+}
+
+.movie__btn-wrap{
+  text-align: left;
+  margin-top: 20px;
+}
+
+.movie__new-title{
+  margin-bottom: 30px;
+}
+
+.movie__list-link{
+  color: #212529;
+}
+
+.movie__list-link:focus{
+  color: #212529;
+}
+
+.movie__list-link:hover{
+  text-decoration: none;
+  color: #764ABC;
+}
+
+.movie__img{
+  width: 100%;
+}
+
+.movie__img-wrap{
+  position: relative;
+  margin-top: 54px;
+}
+
+.movie__img-title{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  color: white;
+  font-size: 42px;
+  line-height: 1;
+}
+
+/*.form-control:focus{*/
+  /*border-color: rgba(118, 74, 188, 1)!important;*/
+  /*box-shadow: 0 0 0 0.2rem rgba(118, 74, 188, .25)!important;*/
+/*}*/
+
