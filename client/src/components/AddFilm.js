@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {required} from "./formValidator";
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import Select from 'react-validation/build/select';
 import button from 'react-validation/build/button';
 import Textarea from 'react-validation/build/textarea';
-
+import {asyncGetFilms,  addNewFilm} from "../actions/actionFilm";
 
 class NewFilms extends Component {
 
@@ -21,8 +22,8 @@ class NewFilms extends Component {
         }
 
         if(flag){
-            this.props.newFilm(data);
-            this.props.getFilms();
+            this.props.addFilmFunction(data);
+            this.props.getFilmsFunction();
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         } else {
             this.form.validateAll();
@@ -67,5 +68,23 @@ class NewFilms extends Component {
         )
     }
 }
-export default NewFilms;
+
+function mapStateToProps(state){
+    return {
+        hasError: state.itemsError,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getFilmsFunction: () => {
+            dispatch(asyncGetFilms());
+        },
+        addFilmFunction: newFilm => {
+            addNewFilm(newFilm)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewFilms);
 

@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import Header from '../components/Header';
 import FilmInfo from '../components/FilmInfo';
 import NewFilms from '../components/AddFilm';
 import LoadFilms from '../components/LoadFile';
-import SearchFilmIn from '../components/local/Search';
-import {
-    asyncGetFilms,
-    viewDetails,
-    addNewFilm,
-    deleteFilm,
-    loadFilms,
-    deleteAllFilms
-} from '../actions/actionFilm'
+import SearchFilmIn from '../components/Search';
 import '../App.css';
 
 class App extends Component {
@@ -24,29 +15,12 @@ class App extends Component {
                     <div className="row">
                         <Header />
                         <SearchFilmIn />
-                        <FilmInfo
-                            hasError={this.props.hasError}
-                            info={this.props.items}
-                            selected={this.props.activeItem}
-                            getFilms={this.props.getFilmsFunction}
-                            getDetails={this.props.getDetailsFunction}
-                            deleteFilm={this.props.deleteFilmFunction}
-                        />
+                        <FilmInfo />
                         <div className="col-12">
                             <div className="row">
                                 <h3 className="col-12 movie__new-title">New films there:</h3>
-                                <NewFilms
-                                    getFilms={this.props.getFilmsFunction}
-                                    newFilm={this.props.addFilmFunction}
-                                    getDetails={this.props.getDetailsFunction}
-                                />
-                                <LoadFilms
-                                    info={this.props.items}
-                                    loadFilms={this.props.loadFilmsFunction}
-                                    getFilms={this.props.getFilmsFunction}
-                                    getDetails={this.props.getDetailsFunction}
-                                    deleteAll={this.props.deleteAllFilmsFunction}
-                                />
+                                <NewFilms />
+                                <LoadFilms />
                             </div>
                         </div>
                     </div>
@@ -56,35 +30,4 @@ class App extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        items: state.itemsSuccess,
-        hasError: state.itemsError,
-        activeItem: state.viewDetails
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        getFilmsFunction: () => {
-            dispatch(asyncGetFilms());
-        },
-        getDetailsFunction: film => {
-            dispatch(viewDetails(film))
-        },
-        addFilmFunction: newFilm => {
-            addNewFilm(newFilm)
-        },
-        loadFilmsFunction: loadedFilms => {
-            loadFilms(loadedFilms)
-        },
-        deleteFilmFunction: id => {
-            deleteFilm(id)
-        },
-        deleteAllFilmsFunction: () => {
-            deleteAllFilms()
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App

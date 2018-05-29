@@ -1,6 +1,6 @@
 import {gridHeadings} from "../constans/const";
 
-export const parseFile = string => {
+export const parseFile = (string) => {
     const cells = string.split('\n\n').map(el => {
             return el.split('\n').map(item => {
                 return item.split(':').splice(1, 1).toString().trim()

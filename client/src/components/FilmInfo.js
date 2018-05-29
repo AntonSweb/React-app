@@ -1,43 +1,31 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {asyncGetFilms, viewDetails, deleteFilm} from '../actions/actionFilm'
 import ImageTest from '../movie-film-video.jpg';
 import FilmDetails from './local/Details';
+import SortFilms from './local/Sort';
 
 class FilmInfo extends Component {
-    movieSelected;
-    emptyList;
-    sort;
+    movieSelected = '';
+    emptyList = '';
+    sortText =  '';
 
     componentDidMount() {
-        this.props.getFilms();
-    }
-
-    sortListFilms() {
-        if(this.props.info.length !== 0) {
-            this.props.info.sort((a, b) => {
-                if (a.title < b.title) return -1;
-                if (a.title > b.title) return 1;
-                return 0;
-            });
-            this.props.getDetails(this.props.info[0]);
-        }
+        this.props.getFilmsFunction();
     }
 
     showSelectedMovie() {
         return(
-            <FilmDetails
-                removeMovie={this.props.deleteFilm}
-                updateList={this.props.getFilms}
-                deleteDetails={this.props.getDetails}
-                details={this.props.selected} />
+            <FilmDetails />
         )
     }
 
     showListFilms() {
         return (
             <ol className="movie__list">
-                {this.props.info.map((item, index) =>
+                {this.props.items.map((item, index) =>
                     <a href="#top" className="movie__list-link" key={index} >
-                        <li className="movie__list-item list-group-item" onClick={() => this.props.getDetails(item)}>
+                        <li className="movie__list-item list-group-item" onClick={() => this.props.getDetailsFunction(item)}>
                             {item.title}
                         </li>
                     </a>
@@ -63,35 +51,35 @@ class FilmInfo extends Component {
 
     showSortBtn() {
         return (
-            <ol className="movie_sort"><span onClick={this.sortListFilms.bind(this)} className="list-group-item movie__sortByTitle">Sort</span></ol>
+            <SortFilms />
         )
     }
 
     render() {
-        if (this.props.selected === null){
+        if (this.props.activeItem === null){
             this.movieSelected = this.showEmtyMovie();
         } else {
             this.movieSelected = this.showSelectedMovie();
         }
 
-        if(this.props.info.length === 0){
+        if (this.props.items.length === 0){
             this.emptyList = this.showEmtyList();
-            this.sort = ''
+            this.sortText = ''
         } else {
-            this.sort = this.showSortBtn();
+            this.sortText = this.showSortBtn();
             this.emptyList = ''
         }
 
         return (
             <div className="col-12">
                 <div className="row">
-                    <div className="col-12 col-md-6 movie__list">
+                    <div className="col-12 col-md-5 movie__list">
                         <h2 className="movie__title">Films:</h2>
                         {this.emptyList}
-                        {this.sort}
+                        {this.sortText}
                         {this.showListFilms()}
                     </div>
-                    <div className="col-12 col-md 6">
+                    <div className="col-12 col-md-7">
                         <h2 className="movie__detail">Details:</h2>
                         {this.movieSelected}
                     </div>
@@ -102,4 +90,26 @@ class FilmInfo extends Component {
     }
 }
 
-export default FilmInfo;
+function mapStateToProps(state){
+    return {
+        items: state.itemsSuccess.filter(item => item.stars.toLowerCase().includes(state.searchItem)),
+        hasError: state.itemsError,
+        activeItem: state.viewDetails
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getFilmsFunction: () => {
+            dispatch(asyncGetFilms());
+        },
+        getDetailsFunction: film => {
+            dispatch(viewDetails(film))
+        },
+        deleteFilmFunction: id => {
+            deleteFilm(id)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmInfo);

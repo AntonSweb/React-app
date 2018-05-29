@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {typeFile} from "../constans/const";
 import {parseFile} from "./parseData";
+import {viewDetails, asyncGetFilms, deleteAllFilms, loadFilms} from "../actions/actionFilm";
 
 class LoadFilms extends Component {
 
@@ -24,8 +26,8 @@ class LoadFilms extends Component {
                 return function(e) {
                     const fsText = e.target.result;
                     const parseData = parseFile(fsText);
-                    that.props.loadFilms(parseData);
-                    that.props.getFilms();
+                    that.props.loadFilmsFunction(parseData);
+                    that.props.getFilmsFunction();
                     that.scrollTop();
                 };
             })(fs);
@@ -41,13 +43,13 @@ class LoadFilms extends Component {
     }
 
     deleteAllFilms() {
-        if (this.props.info.length !== 0){
+        if (this.props.items.length !== 0){
             const confirmation = window.confirm('Are you shure?');
             if (confirmation){
                 this.scrollTop();
-                this.props.deleteAll();
-                this.props.getDetails(null);
-                this.props.getFilms();
+                this.props.deleteAllFilmsFunction();
+                this.props.getDetailsFunction(null);
+                this.props.getFilmsFunction();
             }
         }
     }
@@ -68,4 +70,27 @@ class LoadFilms extends Component {
     }
 }
 
-export default LoadFilms;
+function mapStateToProps(state){
+    return {
+        items: state.itemsSuccess
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getFilmsFunction: () => {
+            dispatch(asyncGetFilms());
+        },
+        getDetailsFunction: film => {
+            dispatch(viewDetails(film))
+        },
+        deleteAllFilmsFunction: () => {
+            deleteAllFilms()
+        },
+        loadFilmsFunction: loadedFilms => {
+            loadFilms(loadedFilms)
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoadFilms);

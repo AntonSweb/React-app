@@ -130,6 +130,9 @@
   margin-bottom: 60px;
 }
 
+ol{
+  padding-left: 25px;
+}
 @media screen and (max-width: 767px){
   .movie__list {
     order: 1
