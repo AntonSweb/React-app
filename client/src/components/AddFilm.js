@@ -32,7 +32,7 @@ class NewFilms extends Component {
     render() {
 
         return (
-            <div className="col-6 movie__add">
+            <div className="col-12 col-md-6 movie__add">
                 <Form id="form" className="movie__form" ref={c => { this.form = c }}>
                     <div className="form-group">
                         <label htmlFor="form-title">Film title:</label>

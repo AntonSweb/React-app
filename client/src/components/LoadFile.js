@@ -54,11 +54,10 @@ class LoadFilms extends Component {
 
     render() {
         return (
-            <div className="col-6 form-group movie__load">
+            <div className="col-12 col-md-6 form-group movie__load">
                 <label htmlFor="movie__load-id" className="movie__load-label">Load file</label>
                 <input onChange={this.loadFile.bind(this)} id="movie__load-id" className="form-control-file movie__in-load" type="file" name="files[]" multiple/>
                 {this.state.renderTextLoad}
-
                 <div className="form-group movie__btn-wrap">
                     <button onClick={this.deleteAllFilms.bind(this)} type="button" className="btn btn-lg btn-outline-danger button movie__btn movie__remove" name="send" value="Remove Film">
                         Remove All Films

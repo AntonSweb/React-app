@@ -1,87 +1,95 @@
 import React, { Component } from 'react';
-import image from '../movie-film.jpg';
 import ImageTest from '../movie-film-video.jpg';
+import FilmDetails from './local/Details'
 
 class FilmInfo extends Component {
     movieSelected;
-    constructor(props) {
-        super(props);
-        this.state = {emptyList: ''};
-    }
+    emptyList;
+    sort;
 
     componentDidMount() {
         this.props.getFilms();
-        if (this.props.hasError) {
-            return <p>Sorry! There was an error loading the films</p>;
-        }
-        if(this.props.info.length === 0){
-            this.setState({
-                emptyList: <p className="movie__not-select">Empty list. Please add film or load file</p>
-            });
-        } else {
-            this.setState({
-                emptyList: ''
-            });
-        }
     }
 
     showListFilms() {
-         return this.props.info.map((item, index) =>
-                <li className="movie__list-item list-group-item" key={index} index={item.id} onClick={() => this.props.getDetails(item)}>
-                    <a href="#top" className="movie__list-link">{item.title}</a>
-                </li>
+         return (
+             <ol className="movie__list">
+                 {this.props.info.map((item, index) =>
+                    <li className="movie__list-item list-group-item" key={index}  onClick={() => this.props.getDetails(item)}>
+                        <a href="#top" className="movie__list-link">{item.title}</a>
+                    </li>
+                 )}
+             </ol>
          )
     }
 
-    deleteMovie(id){
-        this.props.deleteFilm(id);
-        this.props.getFilms();
-        this.props.getDetails(null);
+    sortListFilms() {
+        if(this.props.info.length !== 0) {
+            this.props.info.sort(function (a, b) {
+                if (a.title < b.title) return -1;
+                if (a.title > b.title) return 1;
+                return 0;
+            });
+            this.props.getDetails(this.props.info[0]);
+        }
     }
 
     showSelectedMovie() {
         return(
-            <div id="details" className="movie__details">
-                <div className="movie__img-wrap">
-                    <img src={image} className="movie__img" alt="redux" />
-                    <div className="movie__img-title">{this.props.selected.title}</div>
-                </div>
-                <ul data-id={this.props.selected._id} className="list-group movie__detail-list">
-                    <li className="movie__details-item list-group-item"><strong>Release:</strong> {this.props.selected.release}</li>
-                    <li className="movie__details-item list-group-item"><strong>Format:</strong> {this.props.selected.form}</li>
-                    <li className="movie__details-item list-group-item"><strong>Actors:</strong> {this.props.selected.stars}</li>
-                </ul>
-                <button onClick={() => this.deleteMovie(this.props.selected._id)} type="button" className="movie__details-btn btn btn-lg btn-dark">
-                    Delete this Film
-                </button>
-                <a href="#form" className="movie__details-btn btn btn-lg btn-dark">
-                    Add new Film
-                </a>
+            <FilmDetails
+                removeMovie={this.props.deleteFilm}
+                updateList={this.props.getFilms}
+                deleteDetails={this.props.getDetails}
+                details={this.props.selected} />
+        )
+    }
+
+    showEmtyMovie() {
+        return (
+            <div className="movie__img-wrap">
+                <p className="movie__not-select movie__img-title">no movie</p>
+                <img src={ImageTest} className="movie__img movie__img-test" alt="film" />
             </div>
+        )
+    }
+
+    showEmtyList() {
+        return (
+            <div className="movie__not-wrap"><p className="movie__not-select">Empty list. Please add films</p></div>
+        )
+    }
+
+    showSortBtn() {
+        return (
+            <ol className="movie_sort"><span onClick={this.sortListFilms.bind(this)} className="list-group-item movie__sortByTitle">Sort</span></ol>
         )
     }
 
     render() {
         if (this.props.selected === null){
-            this.movieSelected = <div className="movie__img-wrap">
-                                    <p className="movie__not-select movie__img-title">no movie</p>
-                                    <img src={ImageTest} className="movie__img movie__img-test" alt="film" />
-                                </div>
+            this.movieSelected = this.showEmtyMovie();
         } else {
             this.movieSelected = this.showSelectedMovie();
+        }
+
+        if(this.props.info.length === 0){
+            this.emptyList = this.showEmtyList();
+            this.sort = ''
+        } else {
+            this.sort = this.showSortBtn();
+            this.emptyList = ''
         }
 
         return (
             <div className="col-12">
                 <div className="row">
-                    <div className="col-5 movie__list">
+                    <div className="col-12 col-md-6 movie__list">
                         <h2 className="movie__title">Films:</h2>
-                        <ol className="movie__list">
-                            {this.state.emptyList}
-                            {this.showListFilms()}
-                        </ol>
+                        {this.emptyList}
+                        {this.sort}
+                        {this.showListFilms()}
                     </div>
-                    <div className="col-7">
+                    <div className="col-12 col-md 6">
                         <h2 className="movie__detail">Details:</h2>
                         {this.movieSelected}
                     </div>
