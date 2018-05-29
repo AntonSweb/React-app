@@ -85,12 +85,8 @@
 
 .movie__list-link:hover{
   text-decoration: none;
-}
-
-.movie__list-item:hover .movie__list-link{
   color: #764ABC;
 }
-
 
 .movie__img{
   width: 100%;

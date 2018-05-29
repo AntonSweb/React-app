@@ -12,48 +12,27 @@ export const asyncGetFilms = () => {
 };
 
 export const addNewFilm = (data) => {
-    return dispatch => {
-        api.addFilm(data)
-            .then(response => {
-                return response.data
-            })
-            .then(body => dispatch(addFilmSuccess(body)))
-            .catch(error => itemsFilmError(error));
-    }
+    api.addFilm(data)
+        .then(() => asyncGetFilms())
+        .catch(error => console.log(error))
 };
 
 export const loadFilms = (data) => {
-    return dispatch => {
-        api.loadNewFilms(data)
-            .then(response => {
-                return response.data
-            })
-            .then(body => dispatch(addFilmSuccess(body)))
-            .catch(error => itemsFilmError(error));
-    }
+    api.loadNewFilms(data)
+        .then(() => asyncGetFilms())
+        .catch(error => console.log(error))
 };
 
 export const deleteFilm = (id) => {
-    return dispatch => {
-        api.removeFilm(id)
-            .then(response => {
-                return response.data
-            })
-            .then(id => dispatch(removeFilmSuccess(id)))
-            .catch(error => itemsFilmError(error));
-    }
+    api.removeFilm(id)
+        .then(() => asyncGetFilms())
+        .catch(error => console.log(error))
 };
 
 export const deleteAllFilms = () => {
-    return dispatch => {
-        api.removeAllFilms()
-            .then(response => {
-                return response.data
-               // return asyncGetFilms();
-            })
-            .then(removed => dispatch(removeAllFilmsSuccess(removed)))
-            .catch(error => itemsFilmError(error));
-    }
+    api.removeAllFilms()
+        .then(() => asyncGetFilms())
+        .catch(error => console.log(error))
 };
 
 export function itemsFilmSuccess(items) {
@@ -74,26 +53,5 @@ export function viewDetails(film) {
     return {
         type: 'VIEW_DETAILS',
         payload: film
-    }
-}
-
-export function addFilmSuccess(newFilm) {
-    return {
-        type: 'ADD_FILM_SUCCESS',
-        payload: newFilm
-    }
-}
-
-export function removeFilmSuccess(id) {
-    return {
-        type: 'FILM_REMOVED',
-        payload: id
-    }
-}
-
-export function removeAllFilmsSuccess(removed) {
-    return {
-        type: 'ALL_FILMS_REMOVED',
-        payload: removed
     }
 }

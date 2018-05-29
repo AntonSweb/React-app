@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import FilmInfo from '../components/FilmInfo';
 import NewFilms from '../components/AddFilm';
 import LoadFilms from '../components/LoadFile';
+import SearchFilmIn from '../components/local/Search';
 import {
     asyncGetFilms,
     viewDetails,
@@ -22,6 +23,7 @@ class App extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <Header />
+                        <SearchFilmIn />
                         <FilmInfo
                             hasError={this.props.hasError}
                             info={this.props.items}
@@ -52,7 +54,6 @@ class App extends Component {
             </div>
         );
     }
-
 }
 
 function mapStateToProps(state){
@@ -72,16 +73,16 @@ function mapDispatchToProps(dispatch) {
             dispatch(viewDetails(film))
         },
         addFilmFunction: newFilm => {
-            dispatch(addNewFilm(newFilm));
+            addNewFilm(newFilm)
         },
         loadFilmsFunction: loadedFilms => {
-            dispatch(loadFilms(loadedFilms))
+            loadFilms(loadedFilms)
         },
         deleteFilmFunction: id => {
-            dispatch(deleteFilm(id));
+            deleteFilm(id)
         },
         deleteAllFilmsFunction: () => {
-            dispatch(deleteAllFilms());
+            deleteAllFilms()
         }
     }
 }

@@ -26,30 +26,3 @@ export function viewDetails (state = null, action) {
             return state
     }
 }
-
-export function addNewFilm (state = [], action) {
-    switch (action.type){
-        case "ADD_FILM_SUCCESS":
-            return action.payload;
-        default:
-            return state
-    }
-}
-
-export function removeFilm (state = [], action) {
-    switch (action.type){
-        case "FILM_REMOVED":
-            return action.payload;
-        default:
-            return state
-    }
-}
-
-export function removedAllFilms (state = [], action) {
-    switch (action.type){
-        case "ALL_FILMS_REMOVED":
-            return action.payload;
-        default:
-            return state
-    }
-}

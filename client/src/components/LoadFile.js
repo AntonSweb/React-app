@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {typeFile, sizeFile} from "../constans/const";
+import {typeFile} from "../constans/const";
 import {parseFile} from "./parseData";
 
 class LoadFilms extends Component {
@@ -19,7 +19,7 @@ class LoadFilms extends Component {
         const reader = new FileReader();
         const that = this;
 
-        if(fs.type === typeFile && fs.size < sizeFile){
+        if(fs.type === typeFile){
             reader.onload = (function() {
                 return function(e) {
                     const fsText = e.target.result;
@@ -35,7 +35,7 @@ class LoadFilms extends Component {
             });
         } else {
             this.setState({
-                renderTextLoad: <p className="form-error">Please select the file txt format and size less then 10mb</p>
+                renderTextLoad: <p className="form-error">Please select the file txt format</p>
             });
         }
     }
