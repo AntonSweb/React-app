@@ -4,9 +4,6 @@ import * as dbFilms from './controllers/FilmController';
 import {serverPort} from '../config';
 
 const app = express();
-const srever = app.listen(serverPort, () => {
-    console.log(`server listen on port ${serverPort}`);
-});
 
 dbFilms.setUpConnection();
 
@@ -31,4 +28,8 @@ app.delete('/api/films/:id', (req, res) => {
 
 app.delete('/api/remove', (req, res) => {
     dbFilms.removeAllFilms().then(data => res.send(data))
+});
+
+const srever = app.listen(serverPort, () => {
+    console.log(`server listen on port ${serverPort}`);
 });

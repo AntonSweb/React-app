@@ -18,7 +18,7 @@ class SearchFilmIn extends Component {
     searchItems() {
         if(this.state.value !== ''){
             this.props.onFindFilms([this.state.value.toLowerCase(), this.state.option.toLowerCase()]);
-            if (this.state.option == 'stars'){
+            if (this.state.option === 'stars'){
                 let obj;
                 obj = this.props.items.filter(item => item.stars.toLowerCase().includes(this.state.value))[0];
                 if (obj){
@@ -100,8 +100,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchFilmIn);
-
-// const VisibleTodoList = connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(TodoList)
