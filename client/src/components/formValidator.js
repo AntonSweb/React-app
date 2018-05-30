@@ -2,7 +2,7 @@ import React from 'react';
 import validator from 'react-validation';
 
 export const required = (value) => {
-    if (!value ) {
+    if (value === '' && value !== [] ) {
         return <span className="form-error is-visible">Required</span>;
     }
 };

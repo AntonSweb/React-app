@@ -36,49 +36,38 @@
   margin: 10px 0;
   display: block;
 }
-
 .movie__details-btn{
   margin: 20px;
 }
-
 .movie__not-select{
   font-size: 20px;
 }
-
-
 .movie__list-item{
   display: list-item!important;
   cursor: pointer;
   text-align: left;
 }
-
 .movie__load-label{
   display: block;
   font-size: 18px;
   text-align: left;
 }
-
 .form-group label{
   font-size: 18px;
 }
-
 .movie__detail-list{
   margin-top: 20px;
 }
-
 .movie__btn-wrap{
   text-align: left;
   margin-top: 20px;
 }
-
 .movie__new-title{
   margin-bottom: 30px;
 }
-
 .movie__list-link{
   color: #212529;
 }
-
 .movie__list-link:focus{
   color: #212529;
 }
@@ -87,15 +76,12 @@
   text-decoration: none;
   color: #764ABC;
 }
-
 .movie__img{
   width: 100%;
 }
-
 .movie__img-wrap{
   position: relative;
 }
-
 .movie__img-title{
   position: absolute;
   top: 50%;
@@ -113,19 +99,16 @@
   justify-content: center;
   align-items: center;
 }
-
 .movie_sort{
   margin-bottom: 0;
   cursor: pointer;
 }
-
 .movie__not-wrap{
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
 }
-
 .movie__not-select{
   margin-bottom: 60px;
 }
@@ -141,5 +124,20 @@ ol{
   ol{
     padding-left: 20px;
   }
+}
+.movie__search-select{
+  display: inline-block!important;
+  max-width: 120px;
+}
+.search__wrap{
+    display: flex;
+}
+.search-margin{
+    margin: 0 5px;
+}
+.search-label{
+    display: block;
+    text-align: left;
+    padding-left: 7px;
 }
 

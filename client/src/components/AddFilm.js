@@ -6,10 +6,22 @@ import Input from 'react-validation/build/input';
 import Select from 'react-validation/build/select';
 import button from 'react-validation/build/button';
 import Textarea from 'react-validation/build/textarea';
-import {asyncGetFilms,  addNewFilm} from "../actions/actionFilm";
+import {asyncGetFilms,  addNewFilm, viewDetails} from "../actions/actionFilm";
 
 class NewFilms extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {title: '', release: '', stars: ''};
+    }
+    handleChangeTitle(event) {
+        this.setState({title: event.target.value});
+    }
+    handleChangeRelease(event) {
+        this.setState({release: event.target.value});
+    }
+    handleChangeStars(event) {
+        this.setState({stars: event.target.value});
+    }
     handleSubmit (e) {
         e.preventDefault();
         let data = this.form.getValues();
@@ -20,11 +32,16 @@ class NewFilms extends Component {
                 flag = false;
             }
         }
-
         if(flag){
             this.props.addFilmFunction(data);
+            this.props.getDetailsFunction(data);
             this.props.getFilmsFunction();
             document.body.scrollTop = document.documentElement.scrollTop = 0;
+            this.setState({
+                title: [],
+                release: [],
+                stars: []
+            });
         } else {
             this.form.validateAll();
         }
@@ -37,11 +54,19 @@ class NewFilms extends Component {
                 <Form id="form" className="movie__form" ref={c => { this.form = c }}>
                     <div className="form-group">
                         <label htmlFor="form-title">Film title:</label>
-                        <Input validations={[required]} id="form-title" className="form-control form-control-lg movie__form-in" type="text" name="name" placeholder="title..."/>
+                        <Input
+                            validations={[required]}
+                            onChange={this.handleChangeTitle.bind(this)}
+                            value={this.state.title}
+                            id="form-title" className="form-control form-control-lg movie__form-in" type="text" name="title" placeholder="title..."/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="form-release">Film release:</label>
-                        <Input validations={[required]} id="form-release" className="form-control form-control-lg movie__form-in" type="number" name="release" placeholder="release..." />
+                        <Input
+                            value={this.state.release}
+                            validations={[required]}
+                            onChange={this.handleChangeRelease.bind(this)}
+                            id="form-release" className="form-control form-control-lg movie__form-in" type="number" name="release" placeholder="release..." />
                     </div>
                     <div className="form-group">
                         <label htmlFor="form-format">Film format:</label>
@@ -54,7 +79,11 @@ class NewFilms extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="form-stars">Film Stars:</label>
-                        <Textarea validations={[required]} id="form-stars" className="form-control form-control-lg movie__form-in" type="text" name="stars" placeholder="stars..." rows="3">
+                        <Textarea
+                            validations={[required]}
+                            value={this.state.stars}
+                            onChange={this.handleChangeStars.bind(this)}
+                            id="form-stars" className="form-control form-control-lg movie__form-in" type="text" name="stars" placeholder="stars..." rows="3">
                             Enter the actors
                         </Textarea>
                     </div>
@@ -82,7 +111,10 @@ function mapDispatchToProps(dispatch) {
         },
         addFilmFunction: newFilm => {
             addNewFilm(newFilm)
-        }
+        },
+        getDetailsFunction: film => {
+            dispatch(viewDetails(film))
+        },
     }
 }
 

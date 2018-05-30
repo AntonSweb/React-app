@@ -9,17 +9,18 @@ class FilmInfo extends Component {
     movieSelected = '';
     emptyList = '';
     sortText =  '';
-
+    constructor(props) {
+        super(props);
+        this.state = {type: 'title'};
+    }
     componentDidMount() {
         this.props.getFilmsFunction();
     }
-
     showSelectedMovie() {
         return(
             <FilmDetails />
         )
     }
-
     showListFilms() {
         return (
             <ol className="movie__list">
@@ -33,7 +34,6 @@ class FilmInfo extends Component {
             </ol>
         )
     }
-
     showEmtyMovie() {
         return (
             <div className="movie__img-wrap">
@@ -42,13 +42,11 @@ class FilmInfo extends Component {
             </div>
         )
     }
-
     showEmtyList() {
         return (
             <div className="movie__not-wrap"><p className="movie__not-select">Empty list. Please add films</p></div>
         )
     }
-
     showSortBtn() {
         return (
             <SortFilms />
@@ -61,7 +59,6 @@ class FilmInfo extends Component {
         } else {
             this.movieSelected = this.showSelectedMovie();
         }
-
         if (this.props.items.length === 0){
             this.emptyList = this.showEmtyList();
             this.sortText = ''
@@ -73,13 +70,13 @@ class FilmInfo extends Component {
         return (
             <div className="col-12">
                 <div className="row">
-                    <div className="col-12 col-md-5 movie__list">
+                    <div className="col-12 col-md-6 movie__list">
                         <h2 className="movie__title">Films:</h2>
                         {this.emptyList}
                         {this.sortText}
                         {this.showListFilms()}
                     </div>
-                    <div className="col-12 col-md-7">
+                    <div className="col-12 col-md-6">
                         <h2 className="movie__detail">Details:</h2>
                         {this.movieSelected}
                     </div>
@@ -91,10 +88,16 @@ class FilmInfo extends Component {
 }
 
 function mapStateToProps(state){
-    return {
-        items: state.itemsSuccess.filter(item => item.stars.toLowerCase().includes(state.searchItem)),
-        hasError: state.itemsError,
-        activeItem: state.viewDetails
+    if(state.searchItem[1] === 'stars') {
+        return {
+            items: state.itemsSuccess.filter(item => item.stars.toLowerCase().includes(state.searchItem[0])),
+            activeItem: state.viewDetails
+        }
+    } else {
+       return {
+           items: state.itemsSuccess.filter(item => item.title.toLowerCase().includes(state.searchItem[0])),
+           activeItem: state.viewDetails
+       }
     }
 }
 

@@ -10,11 +10,9 @@ class LoadFilms extends Component {
         super(props);
         this.state = {renderTextLoad: ''};
     }
-
     scrollTop() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
-
     loadFile(e) {
         e.preventDefault();
         const fs = e.target.files[0];
@@ -35,13 +33,13 @@ class LoadFilms extends Component {
             that.setState({
                 renderTextLoad: ''
             });
+            document.getElementById('movie__load-id').value = ''
         } else {
             this.setState({
                 renderTextLoad: <p className="form-error">Please select the file txt format</p>
             });
         }
     }
-
     deleteAllFilms() {
         if (this.props.items.length !== 0){
             const confirmation = window.confirm('Are you shure?');

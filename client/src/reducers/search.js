@@ -1,4 +1,4 @@
-export function searchItem (state = '', action) {
+export function searchItem (state = ['', 'title'], action) {
     switch (action.type){
         case "SEARCH_FILM":
             return action.payload;

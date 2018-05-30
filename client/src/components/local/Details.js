@@ -4,6 +4,7 @@ import image from '../../movie-film.jpg';
 import {asyncGetFilms, viewDetails, deleteFilm} from '../../actions/actionFilm'
 
 class FilmDetails extends Component {
+
     deleteMovie(id){
         this.props.deleteFilmFunction(id);
         this.props.getFilmsFunction();

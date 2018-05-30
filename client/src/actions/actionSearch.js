@@ -1,12 +1,11 @@
-export const searchFilm = (name) => {
+export const searchFilm = (props) => {
     return dispatch => {
-        dispatch(searchItem(name));
+        dispatch(searchItem(props));
     }
 };
-
-export function searchItem(item) {
+export function searchItem(props) {
     return {
         type: 'SEARCH_FILM',
-        payload: item
+        payload: props
     };
 }
