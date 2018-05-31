@@ -6,7 +6,11 @@ REST API
 ````
 cd server/app.js
 ````
-Для асинхронных запросов к api используеться redux-thunk
+-Настройка портов и базы данных в config.json
+
+-Для асинхронных запросов к api используеться redux-thunk
+
+-для дебага подключен redux-devtools-extentions, можно отслеживать action и state
 
 Запсук пирложения
 1. Запускаем mongodb bin/mongo
